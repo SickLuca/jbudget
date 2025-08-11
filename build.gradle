@@ -37,3 +37,7 @@ javafx {
 test {
     useJUnitPlatform()
 }
+
+application {
+    mainClass = "it.unicam.cs.mpgc.jbudget119250.App"
+}

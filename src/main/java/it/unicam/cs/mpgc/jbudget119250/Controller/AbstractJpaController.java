@@ -25,7 +25,6 @@ public abstract class AbstractJpaController<T> implements Controller<T>{
         this.entityClass = entityClass;
     }
 
-    //TODO pulire database e gestire salvataggi multipli
     protected void executeInTransaction(Consumer<EntityManager> operation) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = null;
