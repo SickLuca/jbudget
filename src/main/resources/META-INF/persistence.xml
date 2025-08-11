@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+
+    <persistence-unit name="jbudget-persistence-unit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Lista delle entity classes -->
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Abstractions.AbstractMovement</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Abstractions.AbstractCategory</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultBalance</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultCategory</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultMovement</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultTag</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultUser</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Entities.RecurrentMovement</class>
+        <class>it.unicam.cs.mpgc.jbudget119250.Model.Entities.ScheduledMovement</class>
+
+        <properties>
+            <!-- Database connection settings - H2 File-Based -->
+            <property name="jakarta.persistence.jdbc.driver"
+                      value="org.h2.Driver"/>
+            <!-- Opzione 1: File nella directory corrente -->
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:file:./data/jbudget;DB_CLOSE_DELAY=-1"/>
+
+            <!-- Opzione 2: File in directory specifica (decommenta se preferisci) -->
+            <!-- <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:file:~/jbudget/data/jbudget;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE"/> -->
+
+            <property name="jakarta.persistence.jdbc.user"
+                      value="sa"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value=""/>
+
+            <!-- Hibernate settings -->
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.H2Dialect"/>
+            <!-- Cambiato da create-drop a update per mantenere i dati -->
+            <property name="hibernate.hbm2ddl.auto"
+                      value="update"/>
+            <property name="hibernate.show_sql"
+                      value="true"/>
+            <property name="hibernate.format_sql"
+                      value="true"/>
+
+            <!-- Opzionale: configurazioni aggiuntive per H2 -->
+            <property name="hibernate.connection.pool_size"
+                      value="5"/>
+            <property name="hibernate.connection.autocommit"
+                      value="false"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget119250.View.StaticsManagerView">
+   <children>
+      <HBox alignment="CENTER" prefHeight="78.0" prefWidth="852.0">
+         <children>
+            <Label text="From:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="fromDatePicker">
+               <HBox.margin>
+                  <Insets left="20.0" right="50.0" />
+               </HBox.margin>
+            </DatePicker>
+            <Label layoutX="97.0" layoutY="36.0" text="To:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="toDatePicker" layoutX="232.0" layoutY="36.0">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+               <opaqueInsets>
+                  <Insets right="50.0" />
+               </opaqueInsets>
+            </DatePicker>
+         </children>
+      </HBox>
+      <StackPane prefHeight="384.0" prefWidth="852.0">
+         <children>
+            <PieChart fx:id="tagStatisticsPieChart" title="Tag Statistics" />
+         </children>
+      </StackPane>
+   </children>
+</VBox>

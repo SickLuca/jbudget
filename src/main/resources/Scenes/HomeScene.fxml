@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget119250.View.HomeView">
+   <top>
+      <VBox prefHeight="66.0" prefWidth="852.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="55.0" prefWidth="852.0">
+               <children>
+                  <Label prefHeight="100.0" prefWidth="183.0" text="Current Balance: $  ">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="balanceValueLabel" prefHeight="226.0" prefWidth="141.0" text="0.00">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <HBox prefHeight="349.0" prefWidth="802.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="409.0" prefWidth="211.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="239.0" text="Complete fields:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="27.0" prefWidth="102.0" text="Type of movement:" />
+                  <ComboBox fx:id="typeOfMovementComboBox" prefHeight="14.0" prefWidth="152.0" />
+                  <Label layoutX="10.0" layoutY="30.0" prefHeight="28.0" prefWidth="101.0" text="Type of operation:" />
+                  <ComboBox fx:id="typeOfOperationComboBox" layoutX="10.0" layoutY="48.0" prefWidth="150.0" />
+                  <Label layoutX="10.0" layoutY="73.0" prefHeight="29.0" prefWidth="91.0" text="Date of movement:" />
+                  <DatePicker fx:id="dateOfMovementPicker" />
+                  <Label layoutX="10.0" layoutY="116.0" prefHeight="30.0" prefWidth="58.0" text="Amount:" />
+                  <TextField fx:id="amountTextField" prefHeight="2.0" prefWidth="147.0" />
+                  <Label layoutX="10.0" layoutY="220.0" prefHeight="29.0" prefWidth="57.0" text="Add tag:" />
+                  <HBox prefHeight="26.0" prefWidth="222.0">
+                     <children>
+                        <ComboBox fx:id="addTagComboBox" prefWidth="150.0" />
+                        <Region prefHeight="26.0" prefWidth="21.0" />
+                        <Button fx:id="addTagButton" mnemonicParsing="false" text="Add" />
+                     </children>
+                  </HBox>
+                  <Label layoutX="10.0" layoutY="248.0" prefHeight="29.0" prefWidth="57.0" text="User" />
+                  <ComboBox fx:id="userComboBox" layoutX="10.0" layoutY="57.0" prefHeight="14.0" prefWidth="152.0" />
+                  <Region prefHeight="20.0" prefWidth="109.0" />
+                  <Button fx:id="createMovementButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="211.0" text="+ Create new movement" />
+               </children></VBox>
+            <Region prefHeight="418.0" prefWidth="123.0" />
+            <VBox prefHeight="392.0" prefWidth="452.0">
+               <children>
+                  <Label text="Last movements:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="movementsTableView" prefHeight="224.0" prefWidth="349.0">
+                    <columns>
+                      <TableColumn fx:id="idColumn" prefWidth="44.599974036216736" text="ID" />
+                      <TableColumn fx:id="amountColumn" prefWidth="71.20001220703125" text="Amount" />
+                        <TableColumn fx:id="typeColumn" prefWidth="50.20001983642578" text="Type" />
+                        <TableColumn fx:id="operationColumn" prefWidth="89.800048828125" text="Operation" />
+                        <TableColumn fx:id="dateColumn" prefWidth="80.4000244140625" text="Date" />
+                        <TableColumn fx:id="tagsColumn" minWidth="0.0" prefWidth="34.60003662109375" text="Tags" />
+                        <TableColumn fx:id="userColumn" prefWidth="159.79989624023438" text="User" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <Region layoutX="10.0" layoutY="187.0" prefHeight="63.0" prefWidth="452.0" />
+                  <HBox prefHeight="238.0" prefWidth="452.0">
+                     <children>
+                        <VBox prefHeight="165.0" prefWidth="192.0">
+                           <children>
+                              <Label text="Selected tags:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ListView fx:id="selectedTagsListView" prefHeight="200.0" prefWidth="200.0" />
+                              <Region prefHeight="76.0" prefWidth="192.0" />
+                              <Region layoutX="10.0" layoutY="180.0" prefHeight="76.0" prefWidth="192.0" />
+                           </children>
+                        </VBox>
+                        <Region prefHeight="197.0" prefWidth="55.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

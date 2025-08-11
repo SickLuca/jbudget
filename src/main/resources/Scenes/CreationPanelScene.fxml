@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<HBox alignment="CENTER" prefHeight="530.0" prefWidth="852.0" spacing="50.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget119250.View.CreationPanelView">
+   <children>
+      <VBox alignment="TOP_CENTER" prefWidth="250.0" spacing="10.0">
+         <children>
+            <Label alignment="CENTER" text="Category Creation: ">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" text="Insert name of category" />
+            <TextField fx:id="categoryNameTextField" maxWidth="200.0" />
+            <Label alignment="CENTER" text="Insert eventual parent" />
+            <ComboBox fx:id="parentComboBox" maxWidth="200.0" />
+            <Region prefHeight="20.0" />
+            <Button fx:id="createNewCategoryButton" mnemonicParsing="false" maxWidth="200.0" text="Create new category" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="TOP_CENTER" prefWidth="250.0" spacing="10.0">
+         <children>
+            <Label alignment="CENTER" text="Profile Creation: ">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" text="Insert name" />
+            <TextField fx:id="profileNameTextField" maxWidth="200.0" />
+            <Label alignment="CENTER" text="Insert surname" />
+            <TextField fx:id="profileSurnameTextField" maxWidth="200.0" />
+            <Region prefHeight="20.0" />
+            <Button fx:id="createNewProfileButton" mnemonicParsing="false" maxWidth="200.0" text="Create new profile" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox>
