@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
 /**
@@ -84,22 +85,18 @@ public class CreationPanelView implements Initializable {
         category.setName(categoryNameTextField.getText());
         category.setParent(parentComboBox.getSelectionModel().getSelectedItem());
 
-
-        if (category.getName().isBlank()) {
-            AlertView.showAlert("Blank Fields", "Category name must not be blank", Alert.AlertType.ERROR);
-            return;
-        }
-
-        if (categoryController.getAll().stream()
-                .map(AbstractCategory::getName)
-                .anyMatch(c -> c.equalsIgnoreCase(category.getName()) ) ) {
-            AlertView.showAlert("Category already exists", "Category already exists", Alert.AlertType.ERROR);
+        if (!validateCategory(category, categoryController)) {
+            AlertView.showAlert("Invalid category", "Category name must not be blank and must not already exists", Alert.AlertType.ERROR);
             return;
         }
 
         categoryController.save(category);
         initializeComboBox();
 
+        createAssociatedTag(category);
+    }
+
+    private void createAssociatedTag(DefaultCategory category) {
         DefaultTag tag = new DefaultTag();
         tag.setCategory(category);
         tag.setName(category.getFullPath());
@@ -107,7 +104,21 @@ public class CreationPanelView implements Initializable {
         Controller<DefaultTag> tagController = new DefaultJpaController<>(DefaultTag.class);
         tagController.save(tag);
         AlertView.showAlert("Category created", "Category successfully created", Alert.AlertType.INFORMATION);
+    }
 
+    private boolean validateCategory(DefaultCategory category, Controller<DefaultCategory> categoryController) {
+        if (category.getName().isBlank()) {
+            AlertView.showAlert("Blank Fields", "Category name must not be blank", Alert.AlertType.ERROR);
+            return false;
+        }
+
+        if (categoryController.getAll().stream()
+                .map(AbstractCategory::getName)
+                .anyMatch(c -> c.equalsIgnoreCase(category.getName()) ) ) {
+            AlertView.showAlert("Category already exists", "Category already exists", Alert.AlertType.ERROR);
+            return false;
+        }
+        return true;
     }
 
     private boolean validateProfile(Profile profile) {

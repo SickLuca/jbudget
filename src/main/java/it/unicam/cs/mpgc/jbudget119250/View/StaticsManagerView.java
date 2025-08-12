@@ -10,8 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,18 +23,16 @@ import java.util.stream.Collectors;
 
 
 /**
- * The StaticsManagerView class is responsible for managing and displaying statistical
+ * This class is responsible for managing and displaying statistical
  * data in a JavaFX application. It uses a date range selected by the user to filter
- * financial movements and visualizes the summary data using a PieChart. The class
- * implements the {@link Initializable} interface, allowing for custom initialization logic
- * when the user interface is loaded.
+ * financial movements and visualizes the summary data using a PieChart.
  * <p>
- * This class acts as the controller for the associated FXML file and is initialized when
- * the UI is loaded. The main functionalities include:
+ * This class acts as the controller for the associated FXML file {@code StaticsManagerScene.fxml}. The main functionalities include:
  * - Date range selection using DatePicker components.
  * - Fetching and filtering data from a JPA controller based on the date range.
  * - Calculating totals by tags for visualization.
  * - Updating a PieChart UI component with the filtered and grouped data.
+ * - Updating labels that show relevant statistics based on the filtered data.
  */
 public class StaticsManagerView implements Initializable {
 
@@ -44,6 +44,19 @@ public class StaticsManagerView implements Initializable {
 
     @FXML
     private PieChart tagStatisticsPieChart;
+
+    @FXML
+    private Label totalMovementsLabel;
+
+    @FXML
+    private Label maxMovementLabel;
+
+    @FXML
+    private Label minMovementLabel;
+
+    @FXML
+    private Label averageMovementLabel;
+
 
     private DefaultJpaController<AbstractMovement> movementController;
 
@@ -61,35 +74,39 @@ public class StaticsManagerView implements Initializable {
         updatePieChart();
     }
 
+
     private void updatePieChart() {
         try {
-            // Ottieni le date selezionate
+            // Get selected dates
             LocalDateTime fromDate = fromDatePicker.getValue().atStartOfDay();
             LocalDateTime toDate = toDatePicker.getValue().atTime(LocalTime.MAX);
 
-            // Ottieni tutti i movimenti
-            List<AbstractMovement> allMovements = movementController.getAll();
+            //Movements filtered by dates
+            List<AbstractMovement> filteredMovements = getFilteredMovements(fromDate, toDate);
 
-            // Filtra i movimenti per intervallo di date
-            List<AbstractMovement> filteredMovements = allMovements.stream()
-                    .filter(movement -> movement.getDate() != null)
-                    .filter(movement ->
-                            !movement.getDate().isBefore(fromDate) &&
-                                    !movement.getDate().isAfter(toDate))
-                    .collect(Collectors.toList());
+            updateLabels(filteredMovements);
 
-            // Raggruppa per tag e calcola i totali
+            // Group them by tag and calculate amount results
             Map<String, BigDecimal> tagTotals = calculateTagTotals(filteredMovements);
 
-            // Crea i dati per il pie chart
+            // Create data for pie chart
             ObservableList<PieChart.Data> pieChartData = createPieChartData(tagTotals);
 
-            // Aggiorna il pie chart
+            // Update pie chart
             tagStatisticsPieChart.setData(pieChartData);
 
         } catch (Exception e) {
             AlertView.showAlert("Error during data loading: ", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    private List<AbstractMovement> getFilteredMovements(LocalDateTime fromDate, LocalDateTime toDate) {
+        return movementController.getAll().stream()
+                .filter(movement -> movement.getDate() != null)
+                .filter(movement ->
+                        !movement.getDate().isBefore(fromDate) &&
+                                !movement.getDate().isAfter(toDate))
+                .collect(Collectors.toList());
     }
 
     private Map<String, BigDecimal> calculateTagTotals(List<AbstractMovement> movements) {
@@ -99,21 +116,14 @@ public class StaticsManagerView implements Initializable {
             List<DefaultTag> tags = movement.getTag();
             BigDecimal amount = movement.getAmount();
 
-            if (amount == null) {
-                continue;
-            }
-
-            // Se il movimento non ha tag, raggruppalo sotto "No Tag"
+            // If the movement has no tag, group it by "No Tag"
             if (tags == null || tags.isEmpty()) {
                 String noTagKey = "No Tag";
                 tagTotals.merge(noTagKey, amount, BigDecimal::add);
             } else {
-                // Per ogni tag del movimento, aggiungi l'importo
+                // For each movement tag, add the amount
                 for (DefaultTag tag : tags) {
-                    String tagName = (tag.getName() != null && !tag.getName().trim().isEmpty())
-                            ? tag.getName()
-                            : "Unnamed Tag";
-                    tagTotals.merge(tagName, amount, BigDecimal::add);
+                    tagTotals.merge(tag.getName(), amount, BigDecimal::add);
                 }
             }
         }
@@ -129,7 +139,7 @@ public class StaticsManagerView implements Initializable {
             return pieChartData;
         }
 
-        // Crea i dati del chart
+        // Create data chart
         for (Map.Entry<String, BigDecimal> entry : tagTotals.entrySet()) {
             String label = String.format("%s (€%.2f)",
                     entry.getKey(),
@@ -138,6 +148,41 @@ public class StaticsManagerView implements Initializable {
         }
 
         return pieChartData;
+    }
+
+    private void updateLabels(List<AbstractMovement> movements) {
+        totalMovementsLabel.setText(getTotalMovements(movements));
+        maxMovementLabel.setText(getMaxMovement(movements));
+        minMovementLabel.setText(getMinMovement(movements));
+        averageMovementLabel.setText(getAverageMovement(movements));
+    }
+
+    private String getAverageMovement(List<AbstractMovement> movements) {
+        return  movements.stream()
+                .map(AbstractMovement::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(BigDecimal.valueOf(movementController.getAll().size()), RoundingMode.HALF_UP)
+                .toString();
+    }
+
+    private String getMinMovement(List<AbstractMovement> movements) {
+        return movements.stream()
+                .map(AbstractMovement::getAmount)
+                .min(BigDecimal::compareTo)
+                .map(BigDecimal::toString)
+                .orElse("No movements");
+    }
+
+    private String getTotalMovements(List<AbstractMovement> movements) {
+        return movements.size() + " movements";
+    }
+
+    private String getMaxMovement(List<AbstractMovement> movements) {
+        return movements.stream()
+                .map(AbstractMovement::getAmount)
+                .max(BigDecimal::compareTo)
+                .map(BigDecimal::toString)
+                .orElse("No movements");
     }
 
 }

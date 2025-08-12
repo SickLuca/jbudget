@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -105,12 +106,8 @@ public class HomeView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeBalance();
-
         initializeUI();
-
         refreshTableView();
-
-        // setupEventHandlers();
     }
 
     private void initializeUI() {
@@ -165,6 +162,8 @@ public class HomeView implements Initializable {
         userComboBox.getItems().addAll(
                 new DefaultJpaController<>(DefaultUser.class).getAll()
         );
+
+        addTagComboBox.setItems(addTagComboBox.getItems().sorted(Comparator.comparing(DefaultTag::getName)));
     }
     
     private void initializeTable() {
@@ -214,7 +213,7 @@ public class HomeView implements Initializable {
             //Bisogna fare un Alert!
             AlertView.showAlert("Error during data validation", e.getMessage(), Alert.AlertType.ERROR);
         } catch (MovementCreationException e) {
-            AlertView.showAlert("Error during movement saving", e.getMessage(), Alert.AlertType.ERROR);;
+            AlertView.showAlert("Error during movement saving", e.getMessage(), Alert.AlertType.ERROR);
         }
 
     }
@@ -226,7 +225,7 @@ public class HomeView implements Initializable {
         dateOfMovementPicker.setValue(null);
         userComboBox.setValue(null);
 
-        selectedTags.clear(); // La ListView si aggiorna automaticamente
+        selectedTags.clear();
         addTagComboBox.setValue(null);
     }
 
@@ -281,7 +280,7 @@ public class HomeView implements Initializable {
                     BigDecimal amount = movement.getAmount();
                     return movement.getOperationType() == OperationType.INCOME
                             ? amount
-                            : amount.negate(); // EXPENSE = negativo
+                            : amount.negate();
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 

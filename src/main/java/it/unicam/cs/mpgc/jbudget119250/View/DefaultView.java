@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 /**
  * This class is a controller for managing navigation between different views
- * in an application. It implements the {@link Initializable} interface*/
+ * in an application.*/
 public class DefaultView implements Initializable {
 
 @FXML

@@ -40,5 +40,83 @@
             <PieChart fx:id="tagStatisticsPieChart" title="Tag Statistics" />
          </children>
       </StackPane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="90.0" prefWidth="127.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="129.0" text="Total movements:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalMovementsLabel" alignment="CENTER" layoutX="10.0" layoutY="45.0" prefHeight="20.0" prefWidth="129.0" text="0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="372.0" layoutY="10.0" prefHeight="90.0" prefWidth="127.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="129.0" text="Max movement:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="maxMovementLabel" alignment="CENTER" layoutX="10.0" layoutY="45.0" prefHeight="20.0" prefWidth="129.0" text="0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="309.0" layoutY="10.0" prefHeight="90.0" prefWidth="127.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="129.0" text="Min movement:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="minMovementLabel" alignment="CENTER" layoutX="10.0" layoutY="45.0" prefHeight="20.0" prefWidth="129.0" text="0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="500.0" layoutY="10.0" prefHeight="90.0" prefWidth="149.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="144.0" text="Average movement:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="averageMovementLabel" alignment="CENTER" layoutX="10.0" layoutY="45.0" prefHeight="20.0" prefWidth="129.0" text="0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </VBox>
