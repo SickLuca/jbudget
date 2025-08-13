@@ -169,7 +169,8 @@ public class CreationPanelView implements Initializable {
 
         boolean hasMovements = movementController.getAll().stream()
                 .map(AbstractMovement::getUser)
-                .anyMatch(user -> user.equals(selectedProfile));
+                .map(DefaultUser::getId)
+                .anyMatch(id -> id.equals(selectedProfile.getId()));
 
         if (hasMovements) {
             AlertView.showAlert("User actually in use", "Selected user has associated movements", Alert.AlertType.ERROR);
