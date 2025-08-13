@@ -97,6 +97,12 @@ public class HomeView implements Initializable {
     @FXML
     private ListView<DefaultTag> selectedTagsListView;
 
+    @FXML
+    private Button deleteMovementButton;
+
+    @FXML
+    private ComboBox<Long> deleteMovementComboBox;
+
     private static final long DEFAULT_BALANCE_ID = 1L;
     //pattern observer, la lista si aggiorna automaticamente
     Controller<DefaultBalance> balanceController = new DefaultJpaController<>(DefaultBalance.class);
@@ -117,7 +123,9 @@ public class HomeView implements Initializable {
 
         addTagButton.setOnAction(event -> handleAddTag());
         createMovementButton.setOnAction(event -> handleCreateMovement());
+        deleteMovementButton.setOnAction(event -> handleDeleteMovement());
     }
+
 
     private void initializeListView() {
         selectedTagsListView.setItems(selectedTags);
@@ -164,6 +172,8 @@ public class HomeView implements Initializable {
         );
 
         addTagComboBox.setItems(addTagComboBox.getItems().sorted(Comparator.comparing(DefaultTag::getName)));
+
+        updateComboBox();
     }
     
     private void initializeTable() {
@@ -207,6 +217,7 @@ public class HomeView implements Initializable {
             updateBalance();
             refreshTableView();
             clearForm();
+            updateComboBox();
             AlertView.showAlert("Movement created", "Movement successfully created", Alert.AlertType.INFORMATION);
             }
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -216,6 +227,27 @@ public class HomeView implements Initializable {
             AlertView.showAlert("Error during movement saving", e.getMessage(), Alert.AlertType.ERROR);
         }
 
+    }
+
+    private void updateComboBox() {
+        deleteMovementComboBox.getItems().clear();
+        deleteMovementComboBox.getItems().addAll(
+                new DefaultJpaController<>(AbstractMovement.class).getAll().stream()
+                .map(AbstractMovement::getId)
+                .toList()
+        );
+    }
+
+    private void handleDeleteMovement() {
+        Long movement = deleteMovementComboBox.getSelectionModel().getSelectedItem();
+
+        Controller<AbstractMovement> movementController = new DefaultJpaController<>(AbstractMovement.class);
+        movementController.delete(movement);
+
+        refreshTableView();
+        updateBalance();
+        updateComboBox();
+        AlertView.showAlert("Movement deleted", "Movement successfully deleted", Alert.AlertType.INFORMATION);
     }
 
     private void clearForm() {

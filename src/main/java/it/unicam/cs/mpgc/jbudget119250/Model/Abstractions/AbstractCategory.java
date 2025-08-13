@@ -32,7 +32,7 @@ public abstract class AbstractCategory implements Category<AbstractCategory> {
     @JoinColumn(name = "parent_id") //category_id?
     private AbstractCategory parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<AbstractCategory> children = new ArrayList<>();
 
     public boolean isRoot() {

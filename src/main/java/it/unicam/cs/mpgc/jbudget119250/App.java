@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.jbudget119250;
 
 import it.unicam.cs.mpgc.jbudget119250.Controller.Controller;
 import it.unicam.cs.mpgc.jbudget119250.Controller.DefaultJpaController;
+import it.unicam.cs.mpgc.jbudget119250.Model.Abstractions.AbstractCategory;
 import it.unicam.cs.mpgc.jbudget119250.Model.Abstractions.AbstractMovement;
 import it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultCategory;
 import it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultMovement;
@@ -12,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class App extends Application {
@@ -29,7 +29,7 @@ public class App extends Application {
 
         //addTagsAndCategories();
         //addProfiles();
-       // removeNullMovements();
+        //removeNullMovements();
         //removeDuplicateProfiles();
         //removeDuplicateTags();
         //printAllTags();
@@ -150,9 +150,9 @@ public class App extends Application {
     }
 
     private static void removeNullMovements() {
-        Controller<DefaultMovement> movementController = new DefaultJpaController<>(DefaultMovement.class);
-        for (DefaultMovement movement : movementController.getAll() ) {
-            if (movement.getId() == 5L) {
+        Controller<AbstractMovement> movementController = new DefaultJpaController<>(AbstractMovement.class);
+        for (AbstractMovement movement : movementController.getAll() ) {
+            if (movement.getTag().isEmpty()) {
                 movementController.delete(movement.getId());
             }
         }

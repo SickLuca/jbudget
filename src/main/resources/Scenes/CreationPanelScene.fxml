@@ -20,6 +20,15 @@
             <ComboBox fx:id="parentComboBox" maxWidth="200.0" />
             <Region prefHeight="20.0" />
             <Button fx:id="createNewCategoryButton" maxWidth="200.0" mnemonicParsing="false" text="Create new category" />
+            <Region layoutX="30.0" layoutY="196.0" prefHeight="20.0" />
+            <Label alignment="CENTER" layoutX="53.0" layoutY="30.0" text="Delete a category:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="removeCategoryComboBox" layoutX="36.0" layoutY="160.0" maxWidth="200.0" />
+            <Region layoutX="30.0" layoutY="262.0" prefHeight="20.0" />
+            <Button fx:id="removeCategoryButton" layoutX="36.0" layoutY="226.0" maxWidth="200.0" mnemonicParsing="false" text="Remove Category" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -38,6 +47,15 @@
             <TextField fx:id="profileSurnameTextField" maxWidth="200.0" />
             <Region prefHeight="20.0" />
             <Button fx:id="createNewProfileButton" maxWidth="200.0" mnemonicParsing="false" text="Create new profile" />
+            <Region layoutX="30.0" layoutY="196.0" prefHeight="20.0" />
+            <Label alignment="CENTER" layoutX="64.0" layoutY="30.0" text="Delete a profile:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="removeProfileComboBox" prefHeight="26.0" prefWidth="197.0" />
+            <Region layoutX="30.0" layoutY="262.0" prefHeight="20.0" />
+            <Button fx:id="removeProfileButton" layoutX="36.0" layoutY="226.0" maxWidth="200.0" mnemonicParsing="false" text="Remove profile" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

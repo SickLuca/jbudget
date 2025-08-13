@@ -28,7 +28,7 @@ public abstract class AbstractJpaController<T> implements Controller<T>{
     protected void executeInTransaction(Consumer<EntityManager> operation) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = null;
-        try (em) {
+        try {
             transaction = em.getTransaction();
             transaction.begin();
             operation.accept(em);
