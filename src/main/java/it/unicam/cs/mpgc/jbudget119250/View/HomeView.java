@@ -30,13 +30,12 @@ import java.util.ResourceBundle;
  * - Displaying and updating the current financial balance.
  * - Adding and removing tags for financial movements.
  * - Collecting user input data to create new financial movements.
+ * - Read user input data to remove an existing financial movement.
  * - Updating and displaying a list of movements in a table.
  */
 public class HomeView implements Initializable {
 
-
-    // Header elements
-
+    //Head elements
     @FXML
     private Label balanceValueLabel;
 
@@ -93,6 +92,8 @@ public class HomeView implements Initializable {
 
     @FXML
     private TableColumn<AbstractMovement, String> userColumn;
+
+    // Bottom-right elements
 
     @FXML
     private ListView<DefaultTag> selectedTagsListView;

@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * Functionalities of this class include:
  * - Setting up event handlers for user interaction events such as button clicks.
  * - Validating user input to ensure compliance with specified criteria.
- * - Interacting with a database via generic JPA controllers for saving and fetching entities.
+ * - Interacting with a database via generic JPA controllers for saving, deleting and fetching entities.
  */
 
 public class CreationPanelView implements Initializable {
@@ -195,13 +195,7 @@ public class CreationPanelView implements Initializable {
         Controller<AbstractMovement> movementController = new DefaultJpaController<>(AbstractMovement.class);
 
         // Raccoglie tutte le categorie utilizzate dai movimenti
-        List<Long> usedCategoriesIds = movementController.getAll().stream()
-                .flatMap(movement -> movement.getTag().stream()) // Appiattisce la lista dei tag per ogni movimento
-                .map(DefaultTag::getCategory) // Ottiene la categoria per ogni tag
-                .filter(Objects::nonNull) // Filtra eventuali categorie nulle
-                .map(AbstractCategory::getId)
-                .distinct() // Rimuove duplicati
-                .toList();// Raccoglie in una lista
+        List<Long> usedCategoriesIds = getUsedCategoriesIds(movementController);
 
         // Controllo se la categoria o le sue sottocategorie sono in uso
         if (isCategoryInUse(selectedCategory, usedCategoriesIds)) {
@@ -213,6 +207,16 @@ public class CreationPanelView implements Initializable {
 
         initializeComboBox();
         AlertView.showAlert("Category successfully removed", "Category successfully deleted", Alert.AlertType.INFORMATION);
+    }
+
+    private List<Long> getUsedCategoriesIds(Controller<AbstractMovement> movementController) {
+        return movementController.getAll().stream()
+                .flatMap(movement -> movement.getTag().stream()) // Appiattisce la lista dei tag per ogni movimento
+                .map(DefaultTag::getCategory) // Ottiene la categoria per ogni tag
+                .filter(Objects::nonNull) // Filtra eventuali categorie nulle
+                .map(AbstractCategory::getId)
+                .distinct() // Rimuove duplicati
+                .toList();// Raccoglie in una lista
     }
 
     private boolean isCategoryInUse(AbstractCategory category, List<Long> usedCategoriesIds) {
@@ -242,6 +246,14 @@ public class CreationPanelView implements Initializable {
         removeTagByCategory(category);
 
         Controller<AbstractCategory> categoryController = new DefaultJpaController<>(AbstractCategory.class);
+        //Se la categoria ha un parent, dobbiamo aggiornare la relazione con i suoi children
+        updateParentsRelations(category, categoryController);
+
+        // Infine elimina la categoria stessa
+        categoryController.delete(category.getId());
+    }
+
+    private void updateParentsRelations(AbstractCategory category, Controller<AbstractCategory> categoryController) {
         if (category.getParent() != null) {
             AbstractCategory parent = categoryController.getById(category.getParent().getId());
             if (parent != null) {
@@ -250,9 +262,6 @@ public class CreationPanelView implements Initializable {
                 categoryController.update(parent);
             }
         }
-
-        // Infine elimina la categoria stessa
-        categoryController.delete(category.getId());
     }
 
     private void removeTagByCategory(AbstractCategory category) {
