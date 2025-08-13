@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Abstract base class for modeling hierarchical category structures. A category is
- * characterized by a name, a parent and a list of children.
+ * characterized by: ame, parent, and a list of children.
  * <p>
  * It provides properties and methods for managing parent-child relationships,
  * determining root categories, retrieving hierarchical paths, and handling child categories.

@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.jbudget119250.Model.Abstractions;
 
 import it.unicam.cs.mpgc.jbudget119250.Controller.MovementType;
-import it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultBalance;
+
 import it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultTag;
 import it.unicam.cs.mpgc.jbudget119250.Model.Entities.DefaultUser;
 
@@ -10,13 +10,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Fetch;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 
 /**

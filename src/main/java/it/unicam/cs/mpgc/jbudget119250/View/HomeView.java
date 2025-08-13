@@ -120,12 +120,14 @@ public class HomeView implements Initializable {
         initializeComboBox();
         initializeTable();
         initializeListView();
+        setUpEventHandlers();
+    }
 
+    private void setUpEventHandlers() {
         addTagButton.setOnAction(event -> handleAddTag());
         createMovementButton.setOnAction(event -> handleCreateMovement());
         deleteMovementButton.setOnAction(event -> handleDeleteMovement());
     }
-
 
     private void initializeListView() {
         selectedTagsListView.setItems(selectedTags);
@@ -173,7 +175,7 @@ public class HomeView implements Initializable {
 
         addTagComboBox.setItems(addTagComboBox.getItems().sorted(Comparator.comparing(DefaultTag::getName)));
 
-        updateComboBox();
+        updateDeleteComboBox();
     }
     
     private void initializeTable() {
@@ -217,7 +219,7 @@ public class HomeView implements Initializable {
             updateBalance();
             refreshTableView();
             clearForm();
-            updateComboBox();
+            updateDeleteComboBox();
             AlertView.showAlert("Movement created", "Movement successfully created", Alert.AlertType.INFORMATION);
             }
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -229,7 +231,7 @@ public class HomeView implements Initializable {
 
     }
 
-    private void updateComboBox() {
+    private void updateDeleteComboBox() {
         deleteMovementComboBox.getItems().clear();
         deleteMovementComboBox.getItems().addAll(
                 new DefaultJpaController<>(AbstractMovement.class).getAll().stream()
@@ -246,7 +248,7 @@ public class HomeView implements Initializable {
 
         refreshTableView();
         updateBalance();
-        updateComboBox();
+        updateDeleteComboBox();
         AlertView.showAlert("Movement deleted", "Movement successfully deleted", Alert.AlertType.INFORMATION);
     }
 

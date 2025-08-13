@@ -12,7 +12,7 @@ import lombok.ToString;
  * Represents the default implementation of a category within the system.
  * This class extends the {@code AbstractCategory} class, inheriting its
  * properties and methods for managing hierarchical category structures.
- *
+ * <p>
  * The {@code DefaultCategory} class is annotated as a JPA entity and is mapped
  * to the "DEFAULT_CATEGORY" table in the database. This implementation provides
  * persistence and object-relational mapping capabilities for default categories
