@@ -42,8 +42,12 @@ public abstract class AbstractMovement implements Movement<DefaultTag, DefaultUs
 
     private OperationType operationType;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tag_id")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "movement_tag",
+            joinColumns = @JoinColumn(name = "movement_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
     private List<DefaultTag> tag = new ArrayList<>();
 
     private LocalDateTime date;

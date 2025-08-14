@@ -244,6 +244,11 @@ public class HomeView implements Initializable {
     private void handleDeleteMovement() {
         Long movement = deleteMovementComboBox.getSelectionModel().getSelectedItem();
 
+        if (movement == null) {
+            AlertView.showAlert("Movement not selected", "Please select a movement from the box", Alert.AlertType.ERROR);
+            return;
+        }
+
         Controller<AbstractMovement> movementController = new DefaultJpaController<>(AbstractMovement.class);
         movementController.delete(movement);
 
