@@ -195,6 +195,7 @@ public class HomeView implements Initializable {
         DefaultTag tag = addTagComboBox.getSelectionModel().getSelectedItem();
         if (selectedTagsListView.getItems().contains(tag)) {
             AlertView.showAlert("Tag already exists", "Please select a tag which was not previously added to the list.", Alert.AlertType.ERROR);
+            return;
         }
 
         if (tag != null) {
