@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * - Updating a PieChart UI component with the filtered and grouped data.
  * - Updating labels that show relevant statistics based on the filtered data.
  */
-public class StaticsManagerView implements Initializable {
+public class StatisticsManagerView implements Initializable {
 
     @FXML
     private DatePicker fromDatePicker;

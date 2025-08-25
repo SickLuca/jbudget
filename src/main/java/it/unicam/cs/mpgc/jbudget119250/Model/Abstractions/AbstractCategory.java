@@ -29,43 +29,19 @@ public abstract class AbstractCategory implements Category<AbstractCategory> {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id") //category_id?
+    @JoinColumn(name = "parent_id")
     private AbstractCategory parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<AbstractCategory> children = new ArrayList<>();
 
-    public boolean isRoot() {
-        return this.parent == null;
-    }
-
-    @Override
-    public void addChild(AbstractCategory child) {
-        if (child != null) {
-            child.setParent(this);
-            this.children.add(child);
-        }
-    }
-
-    @Override
-    public void removeChild(Long id) {
-        if (id != null) {
-            this.getChildById(id).setParent(null);
-            this.getChildren().removeIf(child -> child.getId().equals(id));
-        }
-    }
-
-    @Override
-    public AbstractCategory getChildById(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Id cannot be null");
-        }
-        return this.getChildren().stream()
-                .filter(child -> child.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-    }
-
+    /**
+     * Retrieves the full hierarchical path of the category as a string.
+     * The path represents the category and its parent categories in the hierarchy,
+     * separated by ">".
+     *
+     * @return the full path of the category in the hierarchy
+     */
     public String getFullPath() {
         if (this.parent == null) {
             return name;

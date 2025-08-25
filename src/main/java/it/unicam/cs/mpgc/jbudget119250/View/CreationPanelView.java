@@ -109,7 +109,7 @@ public class CreationPanelView implements Initializable {
     }
 
     private void handleCreateCategory() {
-        Controller<DefaultCategory> categoryController = new DefaultJpaController<>(DefaultCategory.class);
+        Controller<AbstractCategory> categoryController = new DefaultJpaController<>(AbstractCategory.class);
 
         DefaultCategory category = new DefaultCategory();
         category.setName(categoryNameTextField.getText());
@@ -136,7 +136,7 @@ public class CreationPanelView implements Initializable {
         AlertView.showAlert("Category created", "Category successfully created", Alert.AlertType.INFORMATION);
     }
 
-    private boolean validateCategory(DefaultCategory category, Controller<DefaultCategory> categoryController) {
+    private boolean validateCategory(DefaultCategory category, Controller<AbstractCategory> categoryController) {
         if (category.getName().isBlank()) {
             AlertView.showAlert("Blank Fields", "Category name must not be blank", Alert.AlertType.ERROR);
             return false;

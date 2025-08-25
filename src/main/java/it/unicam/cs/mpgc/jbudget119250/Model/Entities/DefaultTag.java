@@ -28,7 +28,7 @@ public class DefaultTag implements Tag<AbstractCategory> {
 
     private String name;
 
-    @ManyToOne // (cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "category_id")
     private AbstractCategory category;
 

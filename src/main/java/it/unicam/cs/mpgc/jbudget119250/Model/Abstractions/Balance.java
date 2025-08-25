@@ -8,4 +8,7 @@ public interface Balance {
 
     BigDecimal getBalance();
 
+    void setBalance(BigDecimal balance);
+
+
 }

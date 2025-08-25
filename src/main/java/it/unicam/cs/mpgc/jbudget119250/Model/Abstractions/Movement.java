@@ -31,4 +31,14 @@ public interface Movement<T, U> {
 
     MovementType getMovementType();
 
+    void setAmount(BigDecimal amount);
+
+    void setTag(List<T> tag);
+
+    void setDate(LocalDateTime date);
+
+    void setOperationType(OperationType operationType);
+
+    void setUser(U user);
+
 }
